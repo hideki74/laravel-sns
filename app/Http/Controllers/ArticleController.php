@@ -41,4 +41,8 @@ class ArticleController extends Controller
         $article->delete();
         return redirect()->route('articles.index');
     }
+
+    public function show(Article $article) {
+        return view('articles.show', compact('article'));
+    }
 }
