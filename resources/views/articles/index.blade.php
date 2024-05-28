@@ -2,8 +2,11 @@
 
 @section('title', '記事一覧')
 @include('nav')
-<div class="container">
-  @foreach($articles as $article)
-    @include('articles.card')
-  @endforeach
-</div>
+
+@section('content')
+  <div class="container">
+    @foreach($articles as $article)
+      @include('articles.card')
+    @endforeach
+  </div>
+@endsection
