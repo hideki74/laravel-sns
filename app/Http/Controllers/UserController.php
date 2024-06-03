@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     public function show(string $name) {
-        $user = User::where('name', $name)->first();
+        $user = User::where('name', $name)->first()->load(['articles.user', 'articles.likes', 'articles.tags']);;
 
         $articles = $user->articles->sortByDesc('created_at');
 
@@ -16,7 +16,7 @@ class UserController extends Controller
     }
 
     public function likes(string $name) {
-        $user = User::where('name', $name)->first();
+        $user = User::where('name', $name)->first()->load(['likes.user', 'likes.likes', 'likes.tags']);
         $articles = $user->likes->sortByDesc('created_at');
 
         return view('users.likes', compact('user', 'articles'));
@@ -55,8 +55,8 @@ class UserController extends Controller
     }
 
     public function followers(string $name) {
-        $user = User::where('name', $name)->first();
-        $followers = $user->followers->sortByDesc('created_at');
+        $user = User::where('name', $name)->first()->load('followings.followers');;
+        $followers = $user->followers->sortByDesc('created_at') ->load('followers.followers');;
 
         return view('users.followers', compact('user', 'followers'));
     }
