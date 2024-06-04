@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Article;
 use App\Tag;
+use App\Follow;
 use App\Http\Requests\ArticleRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -19,6 +21,15 @@ class ArticleController extends Controller
         $articles = Article::all()->sortByDesc('created_at')->load(['user', 'likes', 'tags']);
 
         return view('articles.index', compact('articles'));
+    }
+
+    public function following(Follow $follow) {
+        $auth_user_id = Auth::id();
+        $following_ids = $follow->followingIDs($auth_user_id);
+        $articles = Article::whereIn('user_id', $following_ids)->get()->sortByDesc('created_at')->load(['user', 'likes', 'tags']);
+        
+
+        return view('articles.following', compact('articles'));
     }
 
     public function create() {
