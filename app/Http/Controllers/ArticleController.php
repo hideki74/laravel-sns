@@ -8,7 +8,6 @@ use App\Tag;
 use App\Follow;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
