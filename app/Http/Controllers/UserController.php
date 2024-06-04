@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     public function show(string $name) {
-        $user = User::where('name', $name)->first()->load(['articles.user', 'articles.likes', 'articles.tags']);;
+        $user = User::where('name', $name)->first()->load(['articles.user', 'articles.likes', 'articles.tags']);
 
         $articles = $user->articles->sortByDesc('created_at');
 
