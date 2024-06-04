@@ -73,4 +73,12 @@ class User extends Authenticatable
     public function getCountFollowingsAttribute(): int {
         return $this->followings->count();
     }
+
+    public function getCountArticlesAttribute(): int {
+        return $this->articles->count();
+    }
+
+    public function getCountLikesAttribute(): int {
+        return $this->likes->count();
+    }
 }
