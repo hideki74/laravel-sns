@@ -3,6 +3,10 @@
   <a class="navbar-brand" href="/"><i class="far fa-sticky-note mr-1"></i>memo</a>
 
   <ul class="navbar-nav ml-auto">
+    
+    <li class="nav-item">
+      <a class="nav-link" href="/rankings/article"><i class='fas fa-award mr-1'></i>ランキング</a>
+    </li>
 
     @guest
     <li class="nav-item">

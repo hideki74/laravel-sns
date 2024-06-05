@@ -32,6 +32,14 @@ Route::prefix('articles')->name('articles.')->group(function() {
     Route::put('/{article}/like', 'ArticleController@like')->name('like')->middleware('auth');
     Route::delete('/{article}/like', 'ArticleController@unlike')->name('unlike')->middleware('auth');
 });
+
+Route::prefix('rankings')->name('rankings.')->group(function() {
+    Route::get('/', 'RankingController@article')->name('article');
+    Route::get('/article', 'RankingController@article')->name('article');
+    Route::get('/follower', 'RankingController@follower')->name('follower');
+    Route::get('/like', 'RankingController@like')->name('like');
+});
+
 Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
 Route::prefix('users')->name('users.')->group( function (){
     Route::get('/{name}', 'UserController@show')->name('show');
