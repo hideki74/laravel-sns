@@ -14,7 +14,7 @@
   <li class="nav-item">
     <a class="nav-link text-muted {{ isset($like) ? 'active' : '' }}"
       href="{{ route("rankings.like") }}">
-      いいね数
+      いいね獲得数
     </a>
   </li>
 </ul>

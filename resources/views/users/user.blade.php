@@ -29,7 +29,7 @@
         {{ $user->count_followers }} フォロワー
       </a>
       <a href="" class="text-muted">
-        {{ $user->count_liked }} いいね獲得
+        {{ $user->count_get_likes }} いいね獲得
       </a>
     </div>
   </div>
