@@ -4,8 +4,6 @@
 @section('content')
   <div class="container">
     @include('rankings.tabs')
-    @foreach($users as $user)
-      @include('rankings.card')
-    @endforeach
+    @include('rankings.users')
   </div>
 @endsection

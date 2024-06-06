@@ -15,7 +15,7 @@
       @else
         <div class="ml-auto"></div>
       @endif
-    <div class="col-1 text-right display-4">
+    <div class="col-1 text-right display-4 {{ $color ?? '' }}">
       @isset($article)
       {{ $user->count_articles }}
       @endisset
