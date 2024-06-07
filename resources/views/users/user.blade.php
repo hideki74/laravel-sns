@@ -28,9 +28,9 @@
       <a href="{{ route('users.followers', ['name' => $user->name]) }}" class="text-muted">
         {{ $user->count_followers }} フォロワー
       </a>
-      <a href="" class="text-muted">
+      <span class="text-muted">
         {{ $user->count_get_likes }} いいね獲得
-      </a>
+      </span>
     </div>
   </div>
 </div>
