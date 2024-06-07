@@ -3,23 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Article;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function show(string $name) {
+    public function show(string $name, Request $request) {
         $user = User::where('name', $name)->first()->load(['articles.user', 'articles.likes', 'articles.tags']);
 
-        $articles = $user->articles->sortByDesc('created_at');
+        $articles = $user->articles;
+        $articles = Article::order($request, $articles);
+        $sort_jp = $this->getSortJp($request);
 
-        return view('users.show', compact('user', 'articles'));
+        return view('users.show', compact('user', 'articles', 'sort_jp'));
     }
 
-    public function likes(string $name) {
+    public function likes(string $name, Request $request) {
         $user = User::where('name', $name)->first()->load(['likes.user', 'likes.likes', 'likes.tags']);
-        $articles = $user->likes->sortByDesc('created_at');
+        $articles = $user->likes;
+        $articles = Article::order($request, $articles);
+        $sort_jp = $this->getSortJp($request);
 
-        return view('users.likes', compact('user', 'articles'));
+        return view('users.likes', compact('user', 'articles', 'sort_jp'));
     }
 
     public function follow(Request $request, string $name) {

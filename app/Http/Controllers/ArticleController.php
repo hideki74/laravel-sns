@@ -11,25 +11,25 @@ use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
-
     public function __construct()
     {
         $this->authorizeResource(Article::class, 'article');
     }
     
-    public function index() {
-        $articles = Article::all()->sortByDesc('created_at')->load(['user', 'likes', 'tags']);
+    public function index(Request $request) {
+        $articles = Article::order($request)->load(['user', 'likes', 'tags']);
+        $sort_jp = $this->getSortJp($request);
 
-        return view('articles.index', compact('articles'));
+        return view('articles.index', compact('articles', 'sort_jp'));
     }
 
-    public function following(Follow $follow) {
-        $auth_user_id = Auth::id();
-        $following_ids = $follow->followingIDs($auth_user_id);
-        $articles = Article::whereIn('user_id', $following_ids)->get()->sortByDesc('created_at')->load(['user', 'likes', 'tags']);
-        
+    public function following(Request $request) {
+        $following_ids = Follow::followingIDs(Auth::id());
+        $articles = Article::whereIn('user_id', $following_ids)->get()->load(['user', 'likes', 'tags']);
+        $articles = Article::order($request, $articles);
+        $sort_jp = $this->getSortJp($request);
 
-        return view('articles.following', compact('articles'));
+        return view('articles.following', compact('articles', 'sort_jp'));
     }
 
     public function create() {
