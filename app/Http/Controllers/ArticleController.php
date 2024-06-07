@@ -5,20 +5,31 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Article;
 use App\Tag;
+use App\Follow;
 use App\Http\Requests\ArticleRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
-
     public function __construct()
     {
         $this->authorizeResource(Article::class, 'article');
     }
     
-    public function index() {
-        $articles = Article::all()->sortByDesc('created_at');
+    public function index(Request $request) {
+        $articles = Article::order($request)->load(['user', 'likes', 'tags']);
+        $sort_jp = $this->getSortJp($request);
 
-        return view('articles.index', compact('articles'));
+        return view('articles.index', compact('articles', 'sort_jp'));
+    }
+
+    public function following(Request $request) {
+        $following_ids = Follow::followingIDs(Auth::id());
+        $articles = Article::whereIn('user_id', $following_ids)->get()->load(['user', 'likes', 'tags']);
+        $articles = Article::order($request, $articles);
+        $sort_jp = $this->getSortJp($request);
+
+        return view('articles.following', compact('articles', 'sort_jp'));
     }
 
     public function create() {
