@@ -13,16 +13,18 @@ class UserController extends Controller
 
         $articles = $user->articles;
         $articles = Article::order($request, $articles);
+        $sort_jp = $this->getSortJp($request);
 
-        return view('users.show', compact('user', 'articles'));
+        return view('users.show', compact('user', 'articles', 'sort_jp'));
     }
 
     public function likes(string $name, Request $request) {
         $user = User::where('name', $name)->first()->load(['likes.user', 'likes.likes', 'likes.tags']);
         $articles = $user->likes;
         $articles = Article::order($request, $articles);
+        $sort_jp = $this->getSortJp($request);
 
-        return view('users.likes', compact('user', 'articles'));
+        return view('users.likes', compact('user', 'articles', 'sort_jp'));
     }
 
     public function follow(Request $request, string $name) {
